@@ -218,7 +218,7 @@ public class UserServiceImpl implements UserService {
         Sip sip = userMapper.getSipNo();
         int count = userMapper.checkSipNoCount();
         if (count <= 10) {
-            SendMail.sendMail("1473605922@qq.com", "", "[Photolink]注册时可用Sip号已不足10个，请尽快添加！", "", null);
+            SendMail.sendMail("1473605922@qq.com", "", "", "[Photolink]注册时可用Sip号已不足10个，请尽快添加！", "");
             logger.info("[用户注册] 可用sip号不超过10个");
         }
         int update = userMapper.updateSipStatus(sip.getNid());
@@ -237,6 +237,7 @@ public class UserServiceImpl implements UserService {
     public boolean sendCodeMail(String account, int code){
         String to = account;
         String copyTo = "";
+        String bcc = "";
         String subject = "Welcome To Photolink!";
 
         StringBuffer content = new StringBuffer();
@@ -254,8 +255,7 @@ public class UserServiceImpl implements UserService {
         content.append(
                 "<span style=\"font-size: 12px;\">SegoPet 2017. All rights reserved.</span><br/><br/>");
         content.append("</div></body></html>");
-        Map<String,String> fileMap = null;
-        boolean flag =  SendMail.sendMail(to,copyTo,subject,content.toString(),fileMap);
+        boolean flag =  SendMail.sendMail(to,copyTo,bcc,subject,content.toString());
         return flag;
     }
 

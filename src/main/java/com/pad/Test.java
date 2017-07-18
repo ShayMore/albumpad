@@ -16,6 +16,7 @@ public class Test {
 	public static void main(String[] args){
 		HTTPSend send = new HTTPSend();
 		
+		// 可添加一层json，解放controller层
 //		Map<Object,Object> m1= new HashMap<Object,Object>();
 //		m1.put("did", "test");
 //		m1.put("token", "token1001");

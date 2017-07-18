@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+
+ -->
+<mapper namespace="com.pad.mobile.user.mapper.UserMapper">
+
+    <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路径-->
+    <select id="checkPhoneNumber" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM tb_sebot_mobile_user
+        <where>
+            <if test="account != null and account !=''">
+                and accountnumber=#{account}
+            </if>
+            <if test="phone != null and phone !=''">
+                and phone=#{phone}
+            </if>
+        </where>
+    </select>
+
+    <!--添加用户信息-->
+    <insert id="addUser" parameterType="userInfo">
+        INSERT INTO tb_sebot_mobile_user(userid,accountnumber,`password`,nickname,phone,sipno,sippw,registertime,headportrait)
+        VALUES(#{userid},#{accountnumber},#{password},#{nickname},#{phone},#{sipno},#{sippw},NOW(),#{headportrait})
+    </insert>
+
+    <!--登录时，查看相关用户信息-->
+    <select id="loginCheck" parameterType="string" resultType="string">
+        SELECT CONCAT(userid,',',`password`) FROM tb_sebot_mobile_user WHERE accountnumber = #{account}
+    </select>
+
+    <!--查询用户是否绑定设备-->
+    <select id="isBinding" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM tb_sebot_mt_user_device WHERE userid = #{userId}
+    </select>
+
+    <!--根据用户标识查询用户信息-->
+    <select id="queryUserInfo" resultType="userInfo">
+        SELECT userid,accountnumber,password,nickname,phone,sipno,sippw,CONCAT(#{path},headportrait) AS headportrait
+        FROM tb_sebot_mobile_user WHERE userid=#{userId}
+    </select>
+
+    <!--获取Sip号-->
+    <select id="getSipNo" resultType="sip">
+        SELECT c.nid,CONCAT(b.scode,b.acode,c.number) AS sipNo,c.`password` AS sipPw FROM tb_sip_area_server AS b,tb_sip_number AS c
+        WHERE b.aid=c.aid AND c.`status`='1' AND c.isregister='1' LIMIT 0,1
+    </select>
+
+    <!--检测可用sip号数量-->
+    <select id="checkSipNoCount" resultType="int">
+        SELECT COUNT(*) FROM tb_sip_number WHERE status='1' AND isregister='1'
+    </select>
+
+    <!--更新sip号相关(是否占用/注册)状态-->
+    <update id="updateSipStatus" parameterType="string">
+        UPDATE tb_sip_number SET `status` = '0' WHERE nid = #{nid}
+    </update>
+
+</mapper>

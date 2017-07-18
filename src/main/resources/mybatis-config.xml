@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration><!--配置-->
+
+    <settings>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!--<setting name="cacheEnabled" value="true"/>-->
+    </settings>
+
+	<!-- 实体类,简称 -设置别名 -->
+	<typeAliases>
+        <package name="com.pad.mobile.user.model"/>
+        <package name="com.pad.terminal"/>
+	</typeAliases>
+
+    <databaseIdProvider type="DB_VENDOR">
+        <property name="SQL Server" value="sqlserver"/>
+        <property name="MySQL" value="mysql"/>
+        <property name="DB2" value="db2"/>
+        <property name="Oracle" value="oracle"/>
+    </databaseIdProvider><!--数据库厂商标识-->
+
+    <!--映射器-->
+	<mappers>
+		<mapper resource="com/pad/mobile/user/mapper/userMapper.xml" />
+        <mapper resource="com/pad/base/generate/identifierMapper.xml"/>
+	</mappers>
+
+</configuration>  

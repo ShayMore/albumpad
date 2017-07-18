@@ -21,14 +21,14 @@ public class SendMail {
 	
 	private static final Logger logger = Logger.getLogger(SendMail.class);
 	
-	public static void main(String[] args) {
-		String to = "mo.yalan@segopet.com";
-		String copyto = "790171163@qq.com";
-		String bcc = "shaymoo@163.com";
-		String subject = "您 好我晕，你最美！";
-		String content = "哈哈，美丽的宝宝你好！";
-		SendMail.sendMail(to, copyto, bcc, subject, content);
-	}
+//	public static void main(String[] args) {
+//		String to = "mo.yalan@segopet.com";
+//		String copyto = "790171163@qq.com";
+//		String bcc = "shaymoo@163.com";
+//		String subject = "您 好我晕，你最美！";
+//		String content = "哈哈，美丽的宝宝你好！";
+//		SendMail.sendMail(to, copyto, bcc, subject, content);
+//	}
 
     // 若开启独立密码（或授权码）,密码则使用独立密码（授权码）
     public static String sender = "1473605922@qq.com";
